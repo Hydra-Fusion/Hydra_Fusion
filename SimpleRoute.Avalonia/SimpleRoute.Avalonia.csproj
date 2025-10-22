@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
+      <PackageReference Include="GridExtra.Avalonia" Version="0.9.1" />
+      <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.10" />
+    </ItemGroup>
+
+</Project>

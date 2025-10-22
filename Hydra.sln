@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra", "Hydra\Hydra.csproj", "{E124F524-D126-4767-AB17-F16628E254B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Application", "Hydra.Application\Hydra.Application.csproj", "{04BFF3E0-79C0-493A-93DF-D80128E7E10C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRoute.Avalonia", "SimpleRoute.Avalonia\SimpleRoute.Avalonia.csproj", "{2DABC9E2-22C2-4DED-A656-DEBAE095B80E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Proton", "Hydra.Proton\Hydra.Proton.csproj", "{1BE2BF6B-A16C-4502-92A3-DA2232D53125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Domain", "Hydra.Domain\Hydra.Domain.csproj", "{ECCAA376-75D8-4AA8-ABD8-ABD58073944A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hydra.Infrastructure", "Hydra.Infrastructure\Hydra.Infrastructure.csproj", "{5FC3DF4F-3CD3-4C82-AE8B-B0B7725BA63C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E124F524-D126-4767-AB17-F16628E254B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E124F524-D126-4767-AB17-F16628E254B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E124F524-D126-4767-AB17-F16628E254B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E124F524-D126-4767-AB17-F16628E254B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04BFF3E0-79C0-493A-93DF-D80128E7E10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04BFF3E0-79C0-493A-93DF-D80128E7E10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04BFF3E0-79C0-493A-93DF-D80128E7E10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04BFF3E0-79C0-493A-93DF-D80128E7E10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DABC9E2-22C2-4DED-A656-DEBAE095B80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DABC9E2-22C2-4DED-A656-DEBAE095B80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DABC9E2-22C2-4DED-A656-DEBAE095B80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DABC9E2-22C2-4DED-A656-DEBAE095B80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE2BF6B-A16C-4502-92A3-DA2232D53125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE2BF6B-A16C-4502-92A3-DA2232D53125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE2BF6B-A16C-4502-92A3-DA2232D53125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE2BF6B-A16C-4502-92A3-DA2232D53125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECCAA376-75D8-4AA8-ABD8-ABD58073944A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECCAA376-75D8-4AA8-ABD8-ABD58073944A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECCAA376-75D8-4AA8-ABD8-ABD58073944A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECCAA376-75D8-4AA8-ABD8-ABD58073944A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC3DF4F-3CD3-4C82-AE8B-B0B7725BA63C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC3DF4F-3CD3-4C82-AE8B-B0B7725BA63C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC3DF4F-3CD3-4C82-AE8B-B0B7725BA63C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC3DF4F-3CD3-4C82-AE8B-B0B7725BA63C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

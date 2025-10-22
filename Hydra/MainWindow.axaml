@@ -1,0 +1,129 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Hydra.ViewModels"
+        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+        xmlns:flex="clr-namespace:Avalonia.Flexbox;assembly=Avalonia.Flexbox"
+        mc:Ignorable="d" 
+        x:Class="Hydra.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Hydra"
+        Width="1000" Height="700"
+        Background="#111">
+    <Grid ColumnDefinitions="250, *" RowDefinitions="*">
+        <Border Grid.Column="0" BorderBrush="#444" BorderThickness="1" Padding="12">
+            <StackPanel Spacing="12">
+                <Button Background="Transparent" BorderThickness="0" Padding="6"
+                        HorizontalAlignment="Stretch" Cursor="Hand">
+                    <Grid ColumnDefinitions="Auto, *" VerticalAlignment="Center" ColumnSpacing="8">
+                        <Border Width="36" Height="36" CornerRadius="8"
+                                BorderBrush="#666" BorderThickness="1"
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <lucideAvalonia:Lucide Icon="User" Width="20" Height="20" StrokeBrush="White" StrokeThickness="1.5"/>
+                        </Border>
+                        <TextBlock Text="Login" FontSize="14" FontWeight="Bold"
+                                   Foreground="White" Margin="8,0,0,0"
+                                   VerticalAlignment="Center" Grid.Column="1"/>
+                    </Grid>
+                </Button>
+                <StackPanel Spacing="3">
+                    <Button Classes="sidebar-button" Command="{Binding GoToHome}">
+                        <StackPanel Orientation="Horizontal"  Spacing="8" VerticalAlignment="Center">
+                            <lucideAvalonia:Lucide Classes="menu_icon" Icon="House" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock Text="Início" VerticalAlignment="Center" Foreground="White" />
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Catálogo -->
+                    <Button Classes="sidebar-button" Command="{Binding GoToCatalog}">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <lucideAvalonia:Lucide Icon="Book" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock Text="Catálogo" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Download -->
+                    <Button Classes="sidebar-button" Command="{Binding GoToDownload}">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <lucideAvalonia:Lucide Icon="Download" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock Text="Download" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Ajustes -->
+                    <Button Classes="sidebar-button" Command="{Binding  GoToSettings}">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <lucideAvalonia:Lucide Icon="Settings" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock Text="Ajustes" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Mods -->
+                    <Button Classes="sidebar-button">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <lucideAvalonia:Lucide Icon="Puzzle" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock Text="Mods" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Biblioteca -->
+                <StackPanel Spacing="6">
+                    <flex:FlexPanel JustifyContent="SpaceBetween">
+                        <TextBlock Text="BIBLIOTECA" FontSize="14" Foreground="White" FontWeight="Bold" DockPanel.Dock="Left"/>
+                        <Button DockPanel.Dock="Right"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="White"
+                                Cursor="Hand"
+                                ToolTip.Tip="Adicionar jogo personalizado">
+                            <TextBlock Text="➕" FontSize="14"/>
+                        </Button>
+                    </flex:FlexPanel>
+
+                    <TextBox Classes="search-box"
+                             Watermark="Buscar" 
+                             BorderThickness="1"
+                             Padding="6"
+                             FontSize="13"
+                             Background="Transparent"
+                             Foreground="White"
+                             CornerRadius="6"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Conteúdo principal -->
+        <Grid Grid.Column="1" RowDefinitions="75, *">
+            <Border BorderBrush="#555" BorderThickness="1">
+                
+            </Border>
+
+            <Border Grid.Row="1" BorderBrush="#444" BorderThickness="1" Background="#1a1a1a">
+                <!-- Conteúdo -->
+                <ScrollViewer>
+                    <ContentControl Content="{Binding Content}"></ContentControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+    </Grid>
+    
+    <Window.Styles>
+        <Style Selector="Button.sidebar-button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="ContentControl TextBlock, HeaderedContentControl TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource LatoFont}" />
+        </Style>
+    </Window.Styles>
+
+</Window>

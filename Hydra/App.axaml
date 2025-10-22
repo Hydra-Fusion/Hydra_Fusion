@@ -1,0 +1,25 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Hydra"
+             x:Class="Hydra.App"
+             RequestedThemeVariant="Dark">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             
+    <Application.DataTemplates>
+        <vm:ViewLocator/>
+    </Application.DataTemplates>
+             
+     <Application.Resources>
+         <FontFamily x:Key="LatoFont">avares://Hydra/Assets/Fonts/Lato-Regular.ttf#Lato</FontFamily>
+     </Application.Resources>
+
+
+     <Application.Styles>
+         <FluentTheme />
+     </Application.Styles>
+
+             
+     
+             
+    
+</Application>

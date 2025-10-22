@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Hydra.ViewModels"
+             xmlns:componentsGame="clr-namespace:Hydra.Components.Home.GameComponent"
+             xmlns:rc="clr-namespace:Responsive.Avalonia;assembly=Responsive.Avalonia"
+             xmlns:conditions="clr-namespace:Hydra.Components.Home"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:HomeViewModel"
+             x:Class="Hydra.Pages.HomePage">
+    <Border>
+        
+        <rc:BreakpointProvider Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StackPanel>
+                <rc:Show Breakpoint="MdAndDown">
+                    <componentsGame:FeaturedComponent Height="300"/>
+                </rc:Show>
+                <rc:Show Condition="{x:Static conditions:CustomBreakpointsAdapter.FaturedMin}">
+                    <componentsGame:FeaturedComponent Height="400"/>
+                </rc:Show>
+            </StackPanel>
+        </rc:BreakpointProvider>
+        
+    </Border>
+</UserControl>
