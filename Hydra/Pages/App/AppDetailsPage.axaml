@@ -1,0 +1,428 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Hydra.ViewModels.App"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:Flex="clr-namespace:Avalonia.Flexbox;assembly=Avalonia.Flexbox"
+             xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+             xmlns:md="clr-namespace:Markdown.Avalonia.Full;assembly=Markdown.Avalonia.Full"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="950"
+             xmlns:local="clr-namespace:Hydra.Helpers"
+             xmlns:ctxt="clr-namespace:ColorTextBlock.Avalonia;assembly=ColorTextBlock.Avalonia"
+             xmlns:conv="clr-namespace:Hydra.Converters"
+             xmlns:i18n="clr-namespace:Hydra.Infrastructure.Localizer;assembly=Hydra.Infrastructure"
+             x:Name="root"
+             x:DataType="vm:AppDetailsViewModel"
+             x:Class="Hydra.Pages.App.AppDetailsPage">
+    
+    <StackPanel>
+        <StackPanel IsVisible="{Binding IsLoading}" Margin="10" Spacing="20">
+            <StackPanel.Styles>
+                <Style Selector="Rectangle">
+                    <Style.Animations>
+                        <Animation Duration="0:0:1.8" IterationCount="Infinite">
+                            <KeyFrame Cue="0%">
+                                <Setter Property="Opacity" Value="0.25"/>
+                            </KeyFrame>
+                            <KeyFrame Cue="50%">
+                                <Setter Property="Opacity" Value="0.55"/>
+                            </KeyFrame>
+                            <KeyFrame Cue="100%">
+                                <Setter Property="Opacity" Value="0.25"/>
+                            </KeyFrame>
+                        </Animation>
+                    </Style.Animations>
+                </Style>
+            </StackPanel.Styles>
+
+            <!-- HERO -->
+            <Border ClipToBounds="True" Height="390" CornerRadius="4"
+                    BorderBrush="#444" BorderThickness="1" Background="#1a1a1a">
+                <Rectangle Fill="{StaticResource ShimmerBrush}" />
+            </Border>
+
+            <!-- SEÇÃO DE DETALHES -->
+            <Grid Margin="10" ColumnSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.8*" />
+                    <ColumnDefinition MinWidth="350" Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- COLUNA ESQUERDA -->
+                <StackPanel Spacing="20">
+
+                    <!-- Nome e Publisher -->
+                    <Border Background="#1a1a1a" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
+                        <StackPanel Margin="15" Spacing="6">
+                            <Rectangle Height="20" Width="180" Fill="#333"/>
+                            <Rectangle Height="15" Width="120" Fill="#333"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- CARROSSEL PRINCIPAL -->
+                    <Border Background="#1a1a1a" BorderBrush="#444" BorderThickness="1" CornerRadius="4" Padding="20" ClipToBounds="True">
+                        <StackPanel Spacing="10" HorizontalAlignment="Center">
+                            <Rectangle Height="280" Width="750" Fill="#333" />
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                                <Rectangle Width="60" Height="40" Fill="#333"/>
+                                <Rectangle Width="60" Height="40" Fill="#333"/>
+                                <Rectangle Width="60" Height="40" Fill="#333"/>
+                                <Rectangle Width="60" Height="40" Fill="#333"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- DESCRIÇÃO -->
+                    <Border Background="#1a1a1a" BorderBrush="#444" BorderThickness="1" CornerRadius="4" ClipToBounds="True">
+                        <StackPanel Margin="15" Spacing="6" ClipToBounds="True">
+                            <Rectangle Height="12" Width="680" Fill="#333"/>
+                            <Rectangle Height="12" Width="600" Fill="#333"/>
+                            <Rectangle Height="12" Width="640" Fill="#333"/>
+                            <Rectangle Height="12" Width="520" Fill="#333"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+
+                <!-- COLUNA DIREITA (REQUISITOS) -->
+                <StackPanel Grid.Column="1" Spacing="15">
+                    <Border Background="#1a1a1a" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
+                        <StackPanel Margin="20" Spacing="10">
+                            <Rectangle Height="14" Width="250" Fill="#333"/>
+                            <Rectangle Height="12" Width="300" Fill="#333"/>
+                            <Rectangle Height="12" Width="280" Fill="#333"/>
+                            <Rectangle Height="12" Width="320" Fill="#333"/>
+                            <Rectangle Height="14" Width="180" Fill="#333" Margin="10 10 0 0"/>
+                            <Rectangle Height="12" Width="310" Fill="#333"/>
+                            <Rectangle Height="12" Width="290" Fill="#333"/>
+                            <Rectangle Height="12" Width="270" Fill="#333"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BLOCO PROTON (caso exista) -->
+                    <Border Background="#1a1a1a" BorderBrush="#444" BorderThickness="1" CornerRadius="4">
+                        <StackPanel Margin="20" Spacing="10">
+                            <Rectangle Height="14" Width="250" Fill="#333"/>
+                            <Rectangle Height="12" Width="300" Fill="#333"/>
+                            <Rectangle Height="12" Width="280" Fill="#333"/>
+                            <Rectangle Height="12" Width="320" Fill="#333"/>
+                            <Rectangle Height="14" Width="180" Fill="#333" Margin="10 10 0 0"/>
+                            <Rectangle Height="12" Width="310" Fill="#333"/>
+                            <Rectangle Height="12" Width="290" Fill="#333"/>
+                            <Rectangle Height="12" Width="270" Fill="#333"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        
+        <StackPanel VerticalAlignment="Stretch" IsVisible="{Binding IsSuccess}">
+            <Grid ClipToBounds="True" Height="390">
+                <asyncImageLoader:AdvancedImage Name="Hero"
+                    Opacity="0.8"
+                    Source="{Binding Details.LibraryHero}"
+                    Stretch="UniformToFill"
+                    VerticalAlignment="Top"/>
+                
+                <Border Margin="30" 
+                        BorderBrush="#444" 
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        ClipToBounds="True"
+                        Opacity="0.95"
+                        Background="#1a1a1a" 
+                        VerticalAlignment="Bottom"  >
+                    <Flex:FlexPanel AlignContent="Center" JustifyContent="SpaceBetween" Height="70">
+                        <StackPanel Margin="10" Spacing="5">
+                            <TextBlock FontSize="12" FontWeight="500">Atualizado 10/09/2025</TextBlock>
+                            <TextBlock FontSize="12" FontWeight="ExtraLight">7 opções de download</TextBlock>
+                        </StackPanel>
+                        
+                        <StackPanel Margin="10" Spacing="15" Orientation="Horizontal">
+                            <Button Background="Transparent" Classes="app_button" BorderBrush="White">
+                                <StackPanel Orientation="Horizontal"  Spacing="8" Margin="3" VerticalAlignment="Center">
+                                    <lucideAvalonia:Lucide Icon="CirclePlus" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
+                                    <TextBlock Text="{i18n:Localize game_details_add_to_library}" VerticalAlignment="Center" Foreground="White" />
+                                </StackPanel>
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="White" Command="{Binding OpenConfig}">
+                                <StackPanel Margin="3">
+                                    <TextBlock Text="{i18n:Localize game_details_open_download_options}" VerticalAlignment="Center" Foreground="White" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Flex:FlexPanel>
+                </Border>
+            </Grid>
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.8*" />
+                    <ColumnDefinition MinWidth="350" Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                
+                <StackPanel HorizontalAlignment="Left" Spacing="30">
+                    <Border
+                            Margin="10" 
+                            BorderBrush="#444" 
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            ClipToBounds="True"
+                            Opacity="0.95"
+                            Background="#1a1a1a" 
+                            VerticalAlignment="Bottom">
+                    
+                        <StackPanel Margin="10" Spacing="5">
+                            <TextBlock FontSize="17" FontWeight="500" Text="{Binding Details.Name}"/>
+                            <TextBlock FontSize="12" FontWeight="ExtraLight" Text="{Binding Publishers}"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <StackPanel >
+                            <Carousel Margin="30" Height="300" MaxWidth="750" Name="slides" ItemsSource="{Binding Screenshots}" >
+                                <Carousel.PageTransition >
+                                    <CompositePageTransition>
+                                        <PageSlide Duration="0:00:00.500" Orientation="Horizontal" />
+                                    </CompositePageTransition>
+                                </Carousel.PageTransition>
+                                
+                                <Carousel.ItemTemplate>
+                                    <DataTemplate>
+                                        <asyncImageLoader:AdvancedImage
+                                            Loader="{Binding Data.ImageLoader, Source={StaticResource VmProxy}}"
+                                            Source="{Binding}"/>
+                                    </DataTemplate>
+                                </Carousel.ItemTemplate>
+                            </Carousel>
+                            
+                            <Grid HorizontalAlignment="Center" >
+                                <ScrollViewer MaxWidth="750"
+                                              HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled">
+                                    <ItemsControl ItemsSource="{Binding Screenshots}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Spacing="8"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Width="60" Height="40" Margin="0 0 0 20"
+                                                        CornerRadius="4"
+                                                        BorderThickness="2"
+                                                        BorderBrush="Transparent"
+                                                        PointerPressed="Thumbnail_Click">
+                                                    <asyncImageLoader:AdvancedImage
+                                                        Loader="{Binding Data.ImageLoader, Source={StaticResource VmProxy}}"
+                                                        Source="{Binding}"
+                                                        Stretch="UniformToFill"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+
+                        </StackPanel>
+                    
+                    
+                    
+                    <StackPanel MinWidth="300" Margin="30 0">
+                        <md:MarkdownScrollViewer Name="DescriptionMarkdown" Markdown="{Binding Details.Description}">
+                            <md:MarkdownScrollViewer.Styles>
+                                <Style Selector="ctxt|CTextBlock.Heading1">
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                                <Style Selector="ctxt|CTextBlock.Heading2">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                                <Style Selector="ctxt|CTextBlock.Heading3">
+                                    <Setter Property="FontSize" Value="15"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                            </md:MarkdownScrollViewer.Styles>
+                        </md:MarkdownScrollViewer>
+                    </StackPanel>
+                </StackPanel>
+                
+                
+                <StackPanel Grid.Column="1">
+                    <Border
+                        IsVisible="{Binding ContainsProtonDetails}"
+                        Margin="10" 
+                        BorderBrush="#444" 
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        ClipToBounds="True"
+                        Opacity="0.95"
+                        Background="#1a1a1a" 
+                        VerticalAlignment="Stretch">
+                        
+                        <StackPanel Margin="30" Spacing="30">
+                            <Border
+                                Padding="8"
+                                CornerRadius="6"
+                                Width="200"
+                                Background="{Binding Details.Proton.Tier, Converter={StaticResource TierToColorConverter}}">
+                                <TextBlock
+                                    Text="{Binding Details.Proton.Tier}"
+                                    FontWeight="Bold"
+                                    FontSize="14"
+                                    Foreground="#000000"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Spacing="5">
+                                <TextBlock FontSize="16" FontWeight="Bold" Padding="0, 0, 0, 5">Proton</TextBlock>
+                                <StackPanel  Orientation="Horizontal" Spacing="10">
+                                    <TextBlock>Score:</TextBlock>
+                                    <TextBlock Text="{Binding Details.Proton.Score}"/>
+                                </StackPanel>
+                            
+                                <StackPanel  Orientation="Horizontal" Spacing="5">
+                                    <TextBlock>Total:</TextBlock>
+                                    <TextBlock Text="{Binding Details.Proton.Total}"/>
+                                </StackPanel>
+                            
+                                <StackPanel  Orientation="Horizontal" Spacing="5">
+                                    <TextBlock>Trending Tier:</TextBlock>
+                                    <TextBlock Text="{Binding Details.Proton.TrendingTier}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                            <StackPanel Spacing="5">
+                                <TextBlock FontSize="16" FontWeight="Bold" Padding="0, 0, 0, 5">Plataformas</TextBlock>
+                                
+                                <StackPanel  Orientation="Horizontal" Spacing="13">
+                                    <TextBlock>Linux:</TextBlock>
+                                    <lucideAvalonia:Lucide Icon="Check" IsVisible="{Binding Linux}" Width="12" Height="12" StrokeBrush="Green" StrokeThickness="1.5"/>
+                                    <lucideAvalonia:Lucide Icon="X" IsVisible="{Binding Linux, Converter={StaticResource NotConverter}}" Width="14" Height="14" StrokeBrush="Red" StrokeThickness="1.5"/>
+                                </StackPanel>
+                            
+                                <StackPanel  Orientation="Horizontal" Spacing="5">
+                                    <TextBlock>Windows:</TextBlock>
+                                    <lucideAvalonia:Lucide Icon="Check" IsVisible="{Binding Windows}" Width="12" Height="12" StrokeBrush="Green" StrokeThickness="1.5"/>
+                                    <lucideAvalonia:Lucide Icon="X" IsVisible="{Binding Windows, Converter={StaticResource NotConverter}}" Width="14" Height="14" StrokeBrush="Red" StrokeThickness="1.5"/>
+                                </StackPanel>
+                            
+                                <StackPanel  Orientation="Horizontal" Spacing="5">
+                                    <TextBlock>Mac:</TextBlock>
+                                    <lucideAvalonia:Lucide Icon="Check" IsVisible="{Binding Mac}" Width="12" Height="12" StrokeBrush="Green" StrokeThickness="1.5"/>
+                                    <lucideAvalonia:Lucide Icon="X" IsVisible="{Binding Mac, Converter={StaticResource NotConverter}}" Width="14" Height="14" StrokeBrush="Red" StrokeThickness="1.5"/>
+                                    
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Border
+                        Margin="10" 
+                        BorderBrush="#444" 
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        ClipToBounds="True"
+                        Opacity="0.95"
+                        Background="#1a1a1a" 
+                        VerticalAlignment="Stretch">
+                        
+                        <StackPanel Spacing="10" Margin="20 30" HorizontalAlignment="Center">
+                            <md:MarkdownScrollViewer Markdown="{Binding Details.PcRequirements.Minimum}">
+                                <md:MarkdownScrollViewer.Styles>
+                                    <Style Selector="ctxt|CTextBlock">
+                                        <Setter Property="FontSize" Value="10"/>
+                                        <Setter Property="FontWeight" Value="ExtraLight"/>
+                                        <Setter Property="Foreground" Value="#E0E0E0"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                    
+                                    <Style Selector="ctxt|CTextBlock.Heading1">
+                                        <Setter Property="FontSize" Value="16"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                    <Style Selector="ctxt|CTextBlock.Heading2">
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                    <Style Selector="ctxt|CTextBlock.Heading3">
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                </md:MarkdownScrollViewer.Styles>
+                                
+                                
+                            </md:MarkdownScrollViewer>
+                            
+                            
+                            <md:MarkdownScrollViewer Markdown="{Binding Details.PcRequirements.Recommended}">
+                                <md:MarkdownScrollViewer.Styles>
+                                    <Style Selector="ctxt|CTextBlock">
+                                        <Setter Property="FontSize" Value="10"/>
+                                        <Setter Property="FontWeight" Value="ExtraLight"/>
+                                        <Setter Property="Foreground" Value="#E0E0E0"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                    
+                                    <Style Selector="ctxt|CTextBlock.Heading1">
+                                        <Setter Property="FontSize" Value="16"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                    <Style Selector="ctxt|CTextBlock.Heading2">
+                                        <Setter Property="FontSize" Value="14"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                    <Style Selector="ctxt|CTextBlock.Heading3">
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Style>
+                                </md:MarkdownScrollViewer.Styles>
+                            </md:MarkdownScrollViewer>
+                        </StackPanel>
+                    </Border>
+                    
+                    
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+    
+    
+    
+    <UserControl.Resources>
+        <local:BindingProxyAppDetails x:Key="VmProxy" Data="{Binding}"/>
+        <conv:TierToColorConverter x:Key="TierToColorConverter"/>
+        <conv:BooleanNegationConverter x:Key="NotConverter"/>
+        
+        <LinearGradientBrush x:Key="ShimmerBrush"
+                             StartPoint="0,0"
+                             EndPoint="1,0"
+                             SpreadMethod="Reflect">
+            <GradientStop Color="#2b2b2b" Offset="0.0"/>
+            <GradientStop Color="#4d4d4d" Offset="0.4"/>
+            <GradientStop Color="#6a6a6a" Offset="0.5"/>
+            <GradientStop Color="#4d4d4d" Offset="0.6"/>
+            <GradientStop Color="#2b2b2b" Offset="1.0"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+    
+    <UserControl.Styles>
+        <Style Selector="Image">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style Selector="asyncImageLoader|AdvancedImage">
+            <Setter Property="Loader"
+                    Value="{Binding ImageLoader}"/>
+        </Style>
+        <Style Selector="Button.app_button:pointerover">
+            <Setter Property="Background" Value="Red"/>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

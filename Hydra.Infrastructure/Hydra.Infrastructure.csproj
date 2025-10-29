@@ -16,12 +16,22 @@
       <PackageReference Include="FuzzySharp" Version="2.0.2" />
       <PackageReference Include="GameFinder" Version="4.9.0" />
       <PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00017" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0-rc.2.25502.107" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0-rc.2.25502.107" />
       <PackageReference Include="Refit" Version="8.0.0" />
       <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="Avalonia.Base">
+        <HintPath>..\..\..\..\..\..\..\..\home\Jayme\.nuget\packages\avalonia\11.3.6\ref\net8.0\Avalonia.Base.dll</HintPath>
+      </Reference>
+      <Reference Include="Avalonia.Markup">
+        <HintPath>..\..\..\..\..\..\..\..\home\Jayme\.nuget\packages\avalonia\11.3.6\ref\net8.0\Avalonia.Markup.dll</HintPath>
+      </Reference>
+      <Reference Include="Avalonia.Markup.Xaml">
+        <HintPath>..\..\..\..\..\..\..\..\home\Jayme\.nuget\packages\avalonia\11.3.6\ref\net8.0\Avalonia.Markup.Xaml.dll</HintPath>
+      </Reference>
       <Reference Include="GameFinder.RegistryUtils">
         <HintPath>..\..\..\..\..\..\..\..\home\Jayme\.nuget\packages\gamefinder.registryutils\4.9.0\lib\net9.0\GameFinder.RegistryUtils.dll</HintPath>
       </Reference>
@@ -31,6 +41,10 @@
       <Reference Include="NexusMods.Paths">
         <HintPath>..\..\..\..\..\..\..\..\home\Jayme\.nuget\packages\nexusmods.paths\0.19.1\lib\net9.0\NexusMods.Paths.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Context\" />
     </ItemGroup>
 
 </Project>

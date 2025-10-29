@@ -13,6 +13,7 @@
     <PackageReference Include="Avalonia" Version="11.3.6" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.6" />
     <PackageReference Include="Avalonia.FuncUI" Version="1.5.1" />
+    <PackageReference Include="Avalonia.HtmlRenderer" Version="11.2.0" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.6" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -25,7 +26,10 @@
     <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
     <PackageReference Include="jp2masa.Avalonia.Flexbox" Version="0.3.0-beta.4" />
     <PackageReference Include="LucideAvalonia" Version="1.6.1" />
+    <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
     <PackageReference Include="Responsive.Avalonia" Version="0.2.0" />
+    <PackageReference Include="ReverseMarkdown" Version="4.7.1" />
+    <PackageReference Include="System.Reactive" Version="6.1.0" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.6.5" />
   </ItemGroup>
 
@@ -38,12 +42,8 @@
       <DependentUpon>DownloadPage.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Components\Home\FeaturedComponent.axaml.cs">
-      <DependentUpon>FeaturedComponent.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Components\Home\HomeGameComponent.axaml.cs">
-      <DependentUpon>HomeGameComponent.axaml</DependentUpon>
+    <Compile Update="Windows\AppDetails\SetupOptions\SetupOptionsWindow.axaml.cs">
+      <DependentUpon>AppDetailsConfigWindow.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -51,10 +51,19 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets/Fonts/*.ttf" />
     <Folder Include="Assets\**\*.*" />
+    <Folder Include="Windows\AppDetails\Dowload\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Hydra.Application\Hydra.Application.csproj" />
+    <ProjectReference Include="..\Hydra.Domain\Hydra.Domain.csproj" />
+    <ProjectReference Include="..\Hydra.Infrastructure\Hydra.Infrastructure.csproj" />
+    <ProjectReference Include="..\Hydra.Proton\Hydra.Proton.csproj" />
     <ProjectReference Include="..\SimpleRoute.Avalonia\SimpleRoute.Avalonia.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="UI\Components\Home\FeaturedComponent.axaml" />
+    <AdditionalFiles Include="UI\Components\Home\HomeGameComponent.axaml" />
   </ItemGroup>
 </Project>

@@ -48,8 +48,11 @@ public class RouterMapper
             var vm = _serviceProvider.GetService(type) as IRoutePage;
             if (vm == null)
                 throw new InvalidOperationException($"O tipo {type.Name} não está registrado no container.");
+
+            var context = new NavigationContext(body, normalizedUrl);
             
-            vm.OnNavigatedTo(new NavigationContext(body, normalizedUrl));
+            vm.OnNavigatedTo(context);
+            Task.Run(async () => await vm.OnNavigatedToAsync(context));
 
             return vm;
         }

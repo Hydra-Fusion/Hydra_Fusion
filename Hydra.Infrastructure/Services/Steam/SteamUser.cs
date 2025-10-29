@@ -46,7 +46,7 @@ public class SteamUser
             {
                 details.GamaLocation = path;
                 
-                if(response.FirstOrDefault(x => x.SteamId == details.SteamId) == null)
+                if(response.FirstOrDefault(x => x.Id == details.Id) == null)
                     response.Add(details);
             }
         }

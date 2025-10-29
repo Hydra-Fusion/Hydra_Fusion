@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:image="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:imageLoader="clr-namespace:AsyncImageLoader.Loaders;assembly=AsyncImageLoader.Avalonia"
+             xmlns:flex="clr-namespace:Avalonia.Flexbox;assembly=Avalonia.Flexbox"
+             xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+             xmlns:dataContext="clr-namespace:Hydra.ViewModels.Components"
+             xmlns:home="clr-namespace:Hydra.UI.Components.Home"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="170"
+             x:DataType="dataContext:HomeGameViewModel"
+             x:Class="Hydra.UI.Components.Home.HomeGameComponent">
+    <Border 
+        PointerPressed="OnCardClicked"
+        BorderBrush="#444" 
+        BorderThickness="1"
+        CornerRadius="14"
+        ClipToBounds="True"
+        Cursor="Hand">
+            <Grid ClipToBounds="True" Name="GameCard">
+                <image:AdvancedImage Source="{Binding Game.LibreryImageUrl, Mode=OneTime, RelativeSource={RelativeSource AncestorType=home:HomeGameComponent}}" 
+                                     Opacity="0.6"
+                                     Stretch="UniformToFill">
+                    
+                    <image:AdvancedImage.Loader>
+                        <imageLoader:RamCachedWebImageLoader/>
+                    </image:AdvancedImage.Loader>
+                    
+                    <image:AdvancedImage.Transitions>
+                        <Transitions>
+                            <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+                        </Transitions>
+                    </image:AdvancedImage.Transitions>
+                </image:AdvancedImage>
+
+                <StackPanel Classes="InfoPanel" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="62" Spacing="9" >
+                    <StackPanel>
+                        <TextBlock Padding="9,1" FontWeight="Bold" FontSize="17" Text="{Binding Game.Title, RelativeSource={RelativeSource AncestorType=home:HomeGameComponent}}"/>
+                        <TextBlock Padding="9,1" FontSize="10">Sem downloads disponíveis</TextBlock>
+                    </StackPanel>
+                    
+                    <flex:FlexPanel AlignItems="Center" ColumnSpacing="10" Margin="10 0 0 0 ">
+                        <TextBlock FontSize="8">
+                            <lucideAvalonia:Lucide Icon="Download" Width="14" Height="10" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock FontSize="8">116.070</TextBlock>
+                        </TextBlock>
+                        
+                        <TextBlock FontSize="8">
+                            <lucideAvalonia:Lucide Icon="User" Width="14" Height="10" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock FontSize="8">53</TextBlock>
+                        </TextBlock>
+                        
+                        <TextBlock FontSize="8">
+                            <lucideAvalonia:Lucide Icon="Star" Width="14" Height="10" StrokeBrush="White" StrokeThickness="1.5"/>
+                            <TextBlock FontSize="8">5.0</TextBlock>
+                        </TextBlock>
+                    </flex:FlexPanel>
+                    
+                    <StackPanel.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="Height" Duration="0:0:0.3"/>
+                            <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3"/>
+                        </Transitions>
+                    </StackPanel.Transitions>
+                    
+                    <StackPanel.Styles>
+                        <Style>
+                            <Setter Property="RenderTransform" Value="translateY(19px)"/>
+                        </Style>
+                    </StackPanel.Styles>
+                </StackPanel>
+                
+            </Grid>
+    </Border>
+    
+    
+    
+    <UserControl.Styles>
+        <Style Selector="Grid:pointerover">
+            <Setter Property="Opacity" Value="1"/> 
+        </Style>
+
+        <Style Selector="Grid:pointerover > image|AdvancedImage">
+            <Setter Property="RenderTransform" Value="scale(1.1)"/>
+        </Style>
+
+        <Style Selector="Grid:pointerover > StackPanel#InfoPanel">
+            <Setter Property="Height" Value="94"/>
+        </Style>
+        
+        <Style Selector="Grid:pointerover > StackPanel.InfoPanel">
+            <Setter Property="RenderTransform" Value="translateY(0px)"/>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

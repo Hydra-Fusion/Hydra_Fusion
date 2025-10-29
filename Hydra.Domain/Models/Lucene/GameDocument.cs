@@ -1,3 +1,4 @@
+using Hydra.Domain.Models.Internal.Catalogue;
 using Lucene.Net.Documents;
 
 namespace Hydra.Domain.Models.Lucene;
@@ -7,9 +8,30 @@ public record CatalogDocument
     public string? Source { get; set; }
     public int Page { get; set; }
     public int PageSize { get; set; }
-    public int TotalResults { get; set; }
-    public int TotalPages { get; set; }
     public IEnumerable<GameDocument> Games { get; set; } = Enumerable.Empty<GameDocument>();
+
+    public Products ConvertToProducts(int totalResults, int maxResults)
+    {
+        return new Products()
+        {
+            CurrentPage = Page,
+            Games = ConvertDocumentGames(),
+            Pages = (int)Math.Ceiling((double)totalResults / maxResults),
+            Total = totalResults
+        };
+    }
+    
+    private List<Product> ConvertDocumentGames()
+        => Games?.Select(x => new Product
+        {
+            Name = x.Title,
+            Cover = x.Cover,
+            Description = x.Description,
+            Categories = x.Categories?.Split(',').ToList(),
+            Tags = x.Tags?.Split(',').ToList(),
+            Developers = x.Developers?.Split(',').ToList(),
+            Publishers = x.Publishers?.Split(',').ToList()
+        }).ToList() ?? new();
 }
 
 public record GameDocument(string Id) : DocumentBase(Id), IDisposable

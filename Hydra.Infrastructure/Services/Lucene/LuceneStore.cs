@@ -42,8 +42,6 @@ public class LuceneStore : LuceneBased<GameDocument>
             Source = Name,
             Page = page,
             Games = documents,
-            TotalResults = result.TotalHits,
-            TotalPages = (int)Math.Ceiling(result.TotalHits / (double)maxResults)
         };
     }
     
@@ -118,12 +116,8 @@ public class LuceneStore : LuceneBased<GameDocument>
         }
         
         if (categoriesFilter != null && categoriesFilter.Count > 0)
-        {
             foreach (var cat in categoriesFilter)
-            {
                 queries.Add(new TermQuery(new Term("Categories", cat)));
-            }
-        }
         
         if (minAge.HasValue || maxAge.HasValue)
         {

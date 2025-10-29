@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i18n="clr-namespace:Hydra.Infrastructure.Localizer;assembly=Hydra.Infrastructure"
+        mc:Ignorable="d" d:DesignWidth="816" d:DesignHeight="446" 
+        Width="816" Height="446"
+        MinWidth="816" MinHeight="446"
+        x:Class="Hydra.Windows.AppDetails.SetupOptions.SetupOptionsWindow"
+        Title="AppDetailsConfigWindow">
+    <ScrollViewer FontFamily="{StaticResource LatoFont}">
+        <StackPanel Margin="15">
+            <TextBlock FontSize="20" FontWeight="500" Text="{i18n:Localize game_details_executable_section_title}"/>
+            <TextBlock FontSize="12" FontWeight="ExtraLight" Text="{i18n:Localize game_details_executable_section_description}" />
+        </StackPanel>
+    </ScrollViewer>
+</Window>

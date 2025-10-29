@@ -18,8 +18,6 @@ public class NavigationContext
 
         Query = new QueryContext(url);
     }
-
-    
 }
 
 public class BodyContext<T>

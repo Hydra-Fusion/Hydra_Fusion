@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:image="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:imageLoader="clr-namespace:AsyncImageLoader.Loaders;assembly=AsyncImageLoader.Avalonia"
+             xmlns:home="clr-namespace:Hydra.UI.Components.Home"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="300"
+             x:Class="Hydra.UI.Components.Home.FeaturedComponent">
+    <Border MinHeight="300" BorderBrush="#444" BorderThickness="1">
+        <Grid ClipToBounds="True">
+            <!-- Imagem de fundo com placeholder -->
+            <image:AdvancedImage Name="LibraryHeroImage"
+                Opacity="0.8"
+                Source="{Binding Featured.LibraryHeroImage, RelativeSource={RelativeSource AncestorType=home:FeaturedComponent}}"
+                Stretch="UniformToFill"
+                VerticalAlignment="Top">
+                
+            </image:AdvancedImage>
+            
+            <!-- Camada de conteúdo sobre a imagem -->
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="16">
+                <!-- Logo do jogo -->
+                <image:AdvancedImage Name="LogoImage"  HorizontalAlignment="Left" Width="300" 
+                  Source="{Binding Featured.LogoImage, RelativeSource={RelativeSource AncestorType=home:FeaturedComponent}}"
+                  Margin="0,0,16,0">
+                    <image:AdvancedImage.Loader>
+                        <imageLoader:RamCachedWebImageLoader/>
+                    </image:AdvancedImage.Loader>
+                    
+                    <image:AdvancedImage.Transitions>
+                        <Transitions>
+                            <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.2"/>
+                        </Transitions>
+                    </image:AdvancedImage.Transitions>
+                </image:AdvancedImage>
+
+                <!-- Texto adaptável -->
+                <TextBlock Text="{Binding Featured.Description, RelativeSource={RelativeSource AncestorType=home:FeaturedComponent}}"
+                           TextWrapping="Wrap"
+                           MaxWidth="550"
+                           Foreground="White"
+                           FontSize="13"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

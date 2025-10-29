@@ -1,6 +1,6 @@
 using Hydra.Infrastructure.Services.Steam;
 
-namespace Hydra_Launcher.Infrastructure.Services.Steam;
+namespace Hydra.Infrastructure.Interfaces.Steam;
 
 public interface ISteam
 {

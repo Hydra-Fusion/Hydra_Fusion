@@ -1,11 +1,11 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using DryIoc;
-using Hydra.IoC;
-using Hydra.IoC.Configure;
+using Hydra.Extensions.IoC;
+using Hydra.Extensions.IoC.Configure;
+using Hydra.Infrastructure.Localizer;
 using Hydra.ViewModels;
 using Hydra.ViewModels.Download;
 using Hydra.ViewModels.Shared;
@@ -13,7 +13,7 @@ using SimpleRoute.Avalonia;
 
 namespace Hydra;
 
-public partial class App : Application
+public partial class App : Avalonia.Application
 {
     public static IContainer? Container { get; private set; }
     public static RouterHistoryManager<ViewModelBasePage> Router { get; private set; }
@@ -22,16 +22,19 @@ public partial class App : Application
     
     public override void Initialize()
     {
+        
         AvaloniaXamlLoader.Load(this);
 
         var builder = HydraIoC.NewBuilder();
-
+        
         builder.Services.
             AddServices();
 
         Container = builder.Build();
         
         Router = Container.Resolve<RouterHistoryManager<ViewModelBasePage>>();
+
+        Localizer.Instance.LoadLanguage("en");
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -54,8 +57,10 @@ public partial class App : Application
         {
             var nativeMenu = new NativeMenu();
             
-            nativeMenu.Items.Add(CreateMenuItem("Início", () => GoTo<HomeViewModel>()));
-            nativeMenu.Items.Add(CreateMenuItem("Downloads", () => GoTo<DownloadViewModel>()));
+            nativeMenu.Items.Add(CreateMenuItem("Início", () => GoTo<HomeViewModel>("home", "Início")));
+            nativeMenu.Items.Add(CreateMenuItem("Downloads", () => GoTo<DownloadViewModel>("download", "Downloads")));
+            nativeMenu.Items.Add(CreateMenuItem("português", () => Localizer.Instance.LoadLanguage("pt-BR")));
+            nativeMenu.Items.Add(CreateMenuItem("Ingles",  () => Localizer.Instance.LoadLanguage("en")));
             nativeMenu.Items.Add(new NativeMenuItemSeparator());
             nativeMenu.Items.Add(CreateMenuItem("Saír do Hydra", () => desktop.Shutdown()));
             
@@ -90,7 +95,7 @@ public partial class App : Application
             return menuItem;
         }
 
-        void GoTo<T>() where T : ViewModelBasePage
+        void GoTo<T>(string url, string title = "") where T : ViewModelBasePage
         {
             if (!_mainWindow!.IsVisible)
             {
@@ -98,9 +103,9 @@ public partial class App : Application
                 _mainWindow.Activate();
             }
             
-            Router.GoTo<T>("home");
+            Router.GoTo<T>(url, title);
         }
+        
     }
-    
     
 }

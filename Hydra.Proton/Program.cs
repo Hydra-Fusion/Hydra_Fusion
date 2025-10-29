@@ -8,8 +8,6 @@ var props = new UmuProps
     SteamInput = true,
     ProtonEnableHidraw = true,
     ProtonLog = true,
-    
-        
 };
 
 var sandbox = new SandBoxProps

@@ -2,25 +2,152 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              xmlns:vm="clr-namespace:Hydra.ViewModels"
-             xmlns:componentsGame="clr-namespace:Hydra.Components.Home.GameComponent"
+             xmlns:i18n="clr-namespace:Hydra.Infrastructure.Localizer;assembly=Hydra.Infrastructure"
              xmlns:rc="clr-namespace:Responsive.Avalonia;assembly=Responsive.Avalonia"
-             xmlns:conditions="clr-namespace:Hydra.Components.Home"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:conv="clr-namespace:Hydra.Converters"
+             xmlns:home="clr-namespace:Hydra.UI.Components.Home"
              x:DataType="vm:HomeViewModel"
              x:Class="Hydra.Pages.HomePage">
     <Border>
         
         <rc:BreakpointProvider Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <StackPanel>
-                <rc:Show Breakpoint="MdAndDown">
-                    <componentsGame:FeaturedComponent Height="300"/>
-                </rc:Show>
-                <rc:Show Condition="{x:Static conditions:CustomBreakpointsAdapter.FaturedMin}">
-                    <componentsGame:FeaturedComponent Height="400"/>
-                </rc:Show>
+            <StackPanel x:Name="LoadingPlaceholder"
+                        IsVisible="{Binding IsLoading}"
+                        Spacing="30">
+                
+                <StackPanel.Styles>
+                    <Style Selector="Rectangle">
+                        <Style.Animations>
+                            <Animation Duration="0:0:1.8" IterationCount="Infinite">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Opacity" Value="0.2"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="50%">
+                                    <Setter Property="Opacity" Value="0.6"/>
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Opacity" Value="0.2"/>
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </StackPanel.Styles>
+
+                <!-- Placeholder do Featured -->
+                <Border ClipToBounds="True" Height="340" Background="#333">
+                    <Rectangle Height="340" Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                </Border>
+                
+                <Border ClipToBounds="True" Padding="14">
+                    <UniformGrid ColumnSpacing="18" RowSpacing="18" 
+                                 Columns="{Binding Bounds.Width, 
+                                    Converter={StaticResource WidthToColumnsConverter}, 
+                                    RelativeSource={RelativeSource AncestorType=rc:BreakpointProvider}}">
+                        
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                        <Border ClipToBounds="True" Height="180" CornerRadius="14" Background="#333">
+                            <Rectangle Fill="{StaticResource ShimmerBrush}" Opacity="0.3"/>
+                        </Border>
+                    </UniformGrid>
+                </Border>
+            </StackPanel>
+            
+            <StackPanel Spacing="30" IsVisible="{Binding IsSuccess}">
+                <home:FeaturedComponent Featured="{Binding Featured}">
+                    <Interaction.Behaviors>
+                        <ia:DataTriggerBehavior
+                            Binding="{Binding Bounds.Width, RelativeSource={RelativeSource AncestorType=rc:BreakpointProvider}}"
+                            ComparisonCondition="LessThan"
+                            Value="900">
+                            <ia:ChangePropertyAction PropertyName="Height" Value="290"/>
+                        </ia:DataTriggerBehavior>
+                        <ia:DataTriggerBehavior
+                            Binding="{Binding Bounds.Width, RelativeSource={RelativeSource AncestorType=rc:BreakpointProvider}}"
+                            ComparisonCondition="GreaterThanOrEqual"
+                            Value="900">
+                            <ia:ChangePropertyAction PropertyName="Height" Value="340"/>
+                        </ia:DataTriggerBehavior>
+                    </Interaction.Behaviors>
+                </home:FeaturedComponent>
+                
+                <Border Padding="14">
+                    <StackPanel>
+                        <Label FontWeight="Bold" FontSize="25" Content="{i18n:Localize home_hot}"/>
+                        <ItemsControl ItemsSource="{Binding Games}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid x:Name="GamesGrid" 
+                                                 ColumnSpacing="18" 
+                                                 RowSpacing="18" 
+                                                 Columns="{Binding Bounds.Width, 
+                                                    Converter={StaticResource WidthToColumnsConverter}, 
+                                                    RelativeSource={RelativeSource AncestorType=rc:BreakpointProvider}}">
+                                    </UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <home:HomeGameComponent MaxWidth="400" Height="180" Game="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </rc:BreakpointProvider>
-        
     </Border>
+    
+    <UserControl.Resources>
+        <conv:HomeWidthToColumnsConverter x:Key="WidthToColumnsConverter"/>
+        
+        <!-- Pincel de brilho -->
+        <LinearGradientBrush x:Key="ShimmerBrush"
+                             StartPoint="0,0"
+                             EndPoint="1,0"
+                             SpreadMethod="Reflect">
+            <GradientStop Color="#2b2b2b" Offset="0.0"/>
+            <GradientStop Color="#4d4d4d" Offset="0.4"/>
+            <GradientStop Color="#6a6a6a" Offset="0.5"/>
+            <GradientStop Color="#4d4d4d" Offset="0.6"/>
+            <GradientStop Color="#2b2b2b" Offset="1.0"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
 </UserControl>

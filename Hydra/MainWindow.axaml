@@ -5,11 +5,14 @@
         xmlns:vm="clr-namespace:Hydra.ViewModels"
         xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
         xmlns:flex="clr-namespace:Avalonia.Flexbox;assembly=Avalonia.Flexbox"
+        xmlns:i18n="clr-namespace:Hydra.Infrastructure.Localizer;assembly=Hydra.Infrastructure"
         mc:Ignorable="d" 
         x:Class="Hydra.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Title="Hydra"
-        Width="1000" Height="700"
+        Title="{Binding WindowTitle}"
+        MinWidth="1070"
+        MinHeight="600"
+        Width="1070" Height="600"
         Background="#111">
     <Grid ColumnDefinitions="250, *" RowDefinitions="*">
         <Border Grid.Column="0" BorderBrush="#444" BorderThickness="1" Padding="12">
@@ -22,7 +25,7 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center">
                             <lucideAvalonia:Lucide Icon="User" Width="20" Height="20" StrokeBrush="White" StrokeThickness="1.5"/>
                         </Border>
-                        <TextBlock Text="Login" FontSize="14" FontWeight="Bold"
+                        <TextBlock Text="{i18n:Localize sidebar_sign_in}" FontSize="14" FontWeight="Bold"
                                    Foreground="White" Margin="8,0,0,0"
                                    VerticalAlignment="Center" Grid.Column="1"/>
                     </Grid>
@@ -31,59 +34,47 @@
                     <Button Classes="sidebar-button" Command="{Binding GoToHome}">
                         <StackPanel Orientation="Horizontal"  Spacing="8" VerticalAlignment="Center">
                             <lucideAvalonia:Lucide Classes="menu_icon" Icon="House" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
-                            <TextBlock Text="Início" VerticalAlignment="Center" Foreground="White" />
+                            <TextBlock Text="{i18n:Localize sidebar_home}" VerticalAlignment="Center" Foreground="White" />
                         </StackPanel>
                     </Button>
 
-                    <!-- Catálogo -->
                     <Button Classes="sidebar-button" Command="{Binding GoToCatalog}">
                         <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                             <lucideAvalonia:Lucide Icon="Book" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
-                            <TextBlock Text="Catálogo" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="{i18n:Localize sidebar_catalogue}" VerticalAlignment="Center" Foreground="White"/>
                         </StackPanel>
                     </Button>
 
-                    <!-- Download -->
                     <Button Classes="sidebar-button" Command="{Binding GoToDownload}">
                         <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                             <lucideAvalonia:Lucide Icon="Download" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
-                            <TextBlock Text="Download" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="{i18n:Localize sidebar_downloads}" VerticalAlignment="Center" Foreground="White"/>
                         </StackPanel>
                     </Button>
 
-                    <!-- Ajustes -->
                     <Button Classes="sidebar-button" Command="{Binding  GoToSettings}">
                         <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                             <lucideAvalonia:Lucide Icon="Settings" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
-                            <TextBlock Text="Ajustes" VerticalAlignment="Center" Foreground="White"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Mods -->
-                    <Button Classes="sidebar-button">
-                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                            <lucideAvalonia:Lucide Icon="Puzzle" Width="14" Height="14" StrokeBrush="White" StrokeThickness="1.5"/>
-                            <TextBlock Text="Mods" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="{i18n:Localize sidebar_settings}" VerticalAlignment="Center" Foreground="White"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
 
-                <!-- Biblioteca -->
                 <StackPanel Spacing="6">
                     <flex:FlexPanel JustifyContent="SpaceBetween">
-                        <TextBlock Text="BIBLIOTECA" FontSize="14" Foreground="White" FontWeight="Bold" DockPanel.Dock="Left"/>
+                        <TextBlock Text="{i18n:Localize sidebar_my_library}" FontSize="14" Foreground="White" FontWeight="Bold" DockPanel.Dock="Left"/>
                         <Button DockPanel.Dock="Right"
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Foreground="White"
                                 Cursor="Hand"
-                                ToolTip.Tip="Adicionar jogo personalizado">
+                                ToolTip.Tip="{i18n:Localize sidebar_custom_game_modal}">
                             <TextBlock Text="➕" FontSize="14"/>
                         </Button>
                     </flex:FlexPanel>
 
                     <TextBox Classes="search-box"
-                             Watermark="Buscar" 
+                             Watermark="{i18n:Localize sidebar_edit_game_modal_browse}" 
                              BorderThickness="1"
                              Padding="6"
                              FontSize="13"
@@ -94,14 +85,19 @@
             </StackPanel>
         </Border>
 
-        <!-- Conteúdo principal -->
         <Grid Grid.Column="1" RowDefinitions="75, *">
-            <Border BorderBrush="#555" BorderThickness="1">
+            <Border BorderBrush="#555" BorderThickness="1" Padding="20">
+                <StackPanel Spacing="35" Orientation="Horizontal">
+                    <Button Background="Transparent" IsVisible="{Binding HasPrev}" 
+                            Command="{Binding Back}">
+                        <lucideAvalonia:Lucide Icon="ArrowLeft" Width="15" Height="15" VerticalAlignment="Center" StrokeBrush="White" StrokeThickness="1.5"/>
+                    </Button>
+                    <TextBlock Text="{Binding Title}" FontWeight="Bold" VerticalAlignment="Center" FontSize="17"/>
+                </StackPanel>
                 
             </Border>
 
-            <Border Grid.Row="1" BorderBrush="#444" BorderThickness="1" Background="#1a1a1a">
-                <!-- Conteúdo -->
+            <Border Grid.Row="1" BorderBrush="#444" BorderThickness="1">
                 <ScrollViewer>
                     <ContentControl Content="{Binding Content}"></ContentControl>
                 </ScrollViewer>

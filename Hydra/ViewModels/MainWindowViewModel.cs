@@ -9,16 +9,32 @@ namespace Hydra.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private ViewModelBasePage _content = default;
+    [ObservableProperty] private string _title;
+    [ObservableProperty] private string _windowTitle;
+    [ObservableProperty] private bool _hasPrev = false;
 
     public MainWindowViewModel()
     {
-        Router.CurrentViewModelChanged += viewModel => Content = viewModel;
+        Router.CurrentViewModelChanged += viewModel =>
+        {
+            Content = viewModel;
+            HasPrev = Router.HasPrev;
+        };
+        
+        Router.CurrentTitleChanged += title =>
+        {
+            Title = title;
+            WindowTitle = string.IsNullOrWhiteSpace(title) ? "Hydra Launcher" : $"Hydra Launcher - {title}";
+        };
 
-        Router.GoTo<HomeViewModel>("home");
+        Router.GoTo<HomeViewModel>("home", "Início");
     }
     
-    public void GoToHome() => Router.GoTo<HomeViewModel>("home");
-    public void GoToCatalog() => Router.GoTo<CatalogViewModel>("catalog");
-    public void GoToDownload() => Router.GoTo<DownloadViewModel>("download");
-    public void GoToSettings() => Router.GoTo<SettingsViewModel>("settings?title=settings");
+    public void Back()
+        => Router.Back();
+    
+    public void GoToHome() => Router.GoTo<HomeViewModel>("home", "Início");
+    public void GoToCatalog() => Router.GoTo<CatalogViewModel>("catalog", "Catálogo");
+    public void GoToDownload() => Router.GoTo<DownloadViewModel>("download", "Downloads");
+    public void GoToSettings() => Router.GoTo<SettingsViewModel>("settings", "Configurações");
 }

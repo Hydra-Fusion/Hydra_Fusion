@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DryIoc;
 using SimpleRoute.Avalonia;
@@ -9,8 +10,11 @@ namespace Hydra.ViewModels.Shared;
 
 public abstract class ViewModelBasePage : ObservableObject, IRoutePage
 {
-    protected IServiceProvider ServiceProvider { get; private set; } = App.Container.Resolve<IServiceProvider>();
-    protected RouterHistoryManager<ViewModelBasePage> Router { get; private set; } = App.Container.Resolve<RouterHistoryManager<ViewModelBasePage>>();
+    protected IServiceProvider ServiceProvider { get; private set; } = Hydra.App.Container.Resolve<IServiceProvider>();
+    protected RouterHistoryManager<ViewModelBasePage> Router { get; private set; } = Hydra.App.Container.Resolve<RouterHistoryManager<ViewModelBasePage>>();
 
-    public abstract void OnNavigatedTo(NavigationContext context);
+    public virtual void OnNavigatedTo(NavigationContext context) { }
+
+    public virtual Task OnNavigatedToAsync(NavigationContext context)
+        => Task.CompletedTask;
 }

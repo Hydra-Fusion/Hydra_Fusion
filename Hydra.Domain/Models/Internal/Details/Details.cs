@@ -1,4 +1,5 @@
 
+using Hydra.Domain.Converter;
 using SteamStorefrontAPI.Classes;
 
 namespace Hydra.Domain.Models.Internal.Details;
@@ -7,12 +8,16 @@ namespace Hydra.Domain.Models.Internal.Details;
 public class Details
 {
     public string Name { get; set; }
+    
+    public string LibraryHero { get; set; }
         
-    public int SteamId { get; set; }
+    public string Id { get; set; }
+    
+    public string Store { get; set; }
     
     public int RequiredAge { get; set; }
         
-    public string ControllerSupport { get; set; }
+    public ControllerSupport ControllerSupport { get; set; }
 
     public string Description { get; set; }
         
@@ -30,7 +35,7 @@ public class Details
         
     public List<string> Publishers { get; set; }
         
-    Platform Platforms { get; set; }
+    public Platform Platforms { get; set; }
     
     public List<Screenshot> Screenshots { get; set; }
 
@@ -45,36 +50,40 @@ public class Details
         if (app == null)
             throw new ArgumentNullException(nameof(app));
 
+        LibraryHero = $"https://shared.steamstatic.com/store_item_assets/steam/apps/{app.SteamAppId}/library_hero.jpg";
         Proton = proton;
-        SteamId = app.SteamAppId;
+        Proton.Tier = Proton.Tier.ToUpper();
+        
+        Id = app.SteamAppId.ToString();
         Name = app.Name ?? string.Empty;
         RequiredAge = app.RequiredAge;
-        ControllerSupport = app.ControllerSupport?.ToString() ?? "None";
-        Description = app.DetailedDescription ?? string.Empty;
+        ControllerSupport = (ControllerSupport)
+            (app.ControllerSupport ?? SteamStorefrontAPI.Classes.ControllerSupport.Partial);
+        Description = HtmlToMarkdown.ConvertSteamDescription(app.DetailedDescription) ?? string.Empty;
         Languages = app.SupportedLanguages ?? string.Empty;
         Header = app.HeaderImage ?? string.Empty;
 
         PcRequirements = app.PcRequirements != null
             ? new Requirements
             {
-                Minimum = app.PcRequirements.Minimum ?? string.Empty,
-                Recommended = app.PcRequirements.Recommended ?? string.Empty
+                Minimum = HtmlToMarkdown.ConvertSteamDescription(app.PcRequirements.Minimum) ?? string.Empty,
+                Recommended = HtmlToMarkdown.ConvertSteamDescription(app.PcRequirements.Recommended) ?? string.Empty
             }
             : new Requirements();
 
         MacRequirements = app.MacRequirements != null
             ? new Requirements
             {
-                Minimum = app.MacRequirements.Minimum ?? string.Empty,
-                Recommended = app.MacRequirements.Recommended ?? string.Empty
+                Minimum = HtmlToMarkdown.ConvertSteamDescription(app.MacRequirements.Minimum) ?? string.Empty,
+                Recommended = HtmlToMarkdown.ConvertSteamDescription(app.MacRequirements.Recommended) ?? string.Empty
             }
             : new Requirements();
 
         LinuxRequirements = app.LinuxRequirements != null
             ? new Requirements
             {
-                Minimum = app.LinuxRequirements.Minimum ?? string.Empty,
-                Recommended = app.LinuxRequirements.Recommended ?? string.Empty
+                Minimum = HtmlToMarkdown.ConvertSteamDescription(app.LinuxRequirements.Minimum) ?? string.Empty,
+                Recommended = HtmlToMarkdown.ConvertSteamDescription(app.LinuxRequirements.Recommended) ?? string.Empty
             }
             : new Requirements();
 
